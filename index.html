@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style .css">
+    <script src="./server.js"></script>
+</head>
+<body>
+<div class="contact container">
+    <h1>Form</h1>
+   <form class="row pb-5 g-3 needs-validation" novalidate>
+    <div><input
+      type="text"
+      class="form-control mt-4"
+      placeholder="id"
+      id="id"
+      required
+      style="display: none;"
+    /></div>
+    <div class="col-6 con-details">
+      <!-- <label for="validationCustom03" class="form-label">Enter your name</label> -->
+       <input
+        type="text"
+        class="form-control mt-4"
+        placeholder="Enter your name"
+        id="username"
+        required
+      />
+      <div class="invalid-feedback">Enter valid name</div>
+
+      <div class="valid-feedback">Looks good!</div>
+
+      <!-- <label for="validationCustom03" class="form-label">Enter your email</label> -->
+      <input
+        type="text"
+        class="form-control mt-4"
+        placeholder="Enter Email"
+        id="email"
+        required
+      />
+      <div class="invalid-feedback">Provide valid email id</div>
+      <div class="valid-feedback">Looks good!</div>
+
+      <!-- <label for="validationCustom03" class="form-label">Subject</label> -->
+       <input
+        type="text"
+        class="form-control mt-4"
+        placeholder="Subject"
+        id="subjects"
+        required
+      />
+      <div class="invalid-feedback">Enter subject</div>
+      <div class="valid-feedback">Looks good!</div>
+    </div>
+      <div class="col-6">
+      <!-- <label for="validationCustom03" class="form-label">Message</label> -->
+     <textarea
+        type="text"
+        class="form-control mt-4"
+        placeholder="Leave your meassage"
+        rows="6"
+        id="message"
+        required
+      ></textarea>
+      <div class="invalid-feedback">Leave your comments</div>
+
+      <div class="valid-feedback">Looks good!</div>
+    </div>
+
+    <div class="col-6 mt-5">
+      <button class="btn btn-field ms-auto" onclick="createUser()" type="button">
+        <div class="ADD">ADD</div>
+      </button>
+    </div>
+    <div class="col-6 mt-5">
+      <button class="btn btn-field1 me-auto" onclick="updateUser()" type="button">
+        <div class="update">UPDATE</div>
+      </button>
+    </div>
+
+  </form>
+  <table id="mytable">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>email</th>
+        <th>subjects</th>
+        <th>message</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="t-body">
+
+    </tbody>
+  </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script>
+
+       // Fetch all the forms we want to apply custom Bootstrap validation styles to
+       const forms = document.querySelectorAll('.needs-validation')
+       // Loop over them and prevent submission
+       Array.from(forms).forEach(form => {
+       form.addEventListener('submit', event => {
+       if (!form.checkValidity()) {
+       event.preventDefault()
+       event.stopPropagation()
+     }
+     form.classList.add('was-validated')
+     },false)
+})
+
+/////////////// function for getall data //////////////
+fetch('http://localhost:3000/getall')
+      .then(response => response.json())
+      .then(json => {
+        html=''
+      json.forEach(e => {
+        html+=
+        `<tr>
+                <td>${e.id}</td>
+                <td>${e.username}</td>
+                <td>${e.email}</td>
+                <td>${e.subjects}</td>
+                <td>${e.message}</td>
+                <td><button onclick="Edit('${e.id}','${e.username}','${e.email}','${e.subjects}','${e.message}')">Edit</button>
+                  <button onclick="Delete()">Delete</button></td>
+                </tr>`
+            });
+      console.log(html)
+      document.getElementsByTagName('tbody')[0].innerHTML=html
+          })
+////////////// function for insert the data /////////////
+function createUser(){
+  console.log(document.getElementById("username").value,);
+  fetch('http://localhost:3000/insert',{
+  method: 'POST',
+  body: JSON.stringify({
+    username: document.getElementById("username").value,
+    email: document.getElementById("email").value,
+    subjects: document.getElementById("subjects").value,
+    message: document.getElementById("message").value
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+}
+
+//////////////// function for update the data ///////////
+
+function updateUser(){
+  console.log('clicked',document.getElementById("username").value,);
+  fetch('http://localhost:3000/update',{
+  method: 'PUT',
+  body: JSON.stringify({
+    id:document.getElementById("id").value,
+    username: document.getElementById("username").value,
+    email: document.getElementById("email").value,
+    subjects: document.getElementById("subjects").value,
+    message: document.getElementById("message").value
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+}
+
+//////////////// function for edit the data ///////////////
+function Edit(id,username,email,subjects,message)
+{  document.getElementById('id').value=id,
+  document.getElementById('username').value=username,
+  document.getElementById('email').value=email,
+  document.getElementById('subjects').value=subjects,
+  document.getElementById('message').value=message
+}
+
+function Delete()
+{
+  
+}
+ 
+  
+  
+  </script>
+</body>
+</html>
