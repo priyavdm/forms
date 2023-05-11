@@ -15,7 +15,7 @@ app.use(cors())
 connection.connect();
 
 app.get('/getall',(req,res)=>{
-    connection.query('SELECT * from users', function (error, results) {
+    connection.query('SELECT * from users where isActive=1;', function (error, results) {
         if (error){
             console.log(error);
         }
@@ -46,6 +46,28 @@ app.put('/update',(req,res)=>{
         });
         
         })
+
+app.put('/delete',(req,res)=>{
+    
+          connection.query('update users set isActive=? where id=?',[req.body.isActive,req.body.id],function (error, results) {
+    if (error) {
+                   console.log(error);       
+           }        
+           res.json(results)
+           });
+           
+           })
+
+// app.get('/get',(req,res)=>{
+    
+//             connection.query('select * from users',[1,req.body.id],function (error, results) {
+//       if (error) {
+//                      console.log(error);       
+//              }        
+//              res.json(results)
+//              });
+             
+//              })
 
 app.listen(3000,()=>{
    console.log("Listening on port 3000");

@@ -16,14 +16,14 @@
 <div class="contact container">
     <h1>Form</h1>
    <form class="row pb-5 g-3 needs-validation" novalidate>
-    <div><input
+    <!-- <div><input
       type="text"
       class="form-control mt-4"
       placeholder="id"
       id="id"
       required
       style="display: none;"
-    /></div>
+    /></div> -->
     <div class="col-6 con-details">
       <!-- <label for="validationCustom03" class="form-label">Enter your name</label> -->
        <input
@@ -76,14 +76,19 @@
 
     <div class="col-6 mt-5">
       <button class="btn btn-field ms-auto" onclick="createUser()" type="button">
-        <div class="ADD">ADD</div>
+        <div class="ADD" id="add-btn">ADD</div>
       </button>
     </div>
     <div class="col-6 mt-5">
-      <button class="btn btn-field1 me-auto" onclick="updateUser()" type="button">
-        <div class="update">UPDATE</div>
+      <button class="btn btn-field1 ms-auto" onclick="updateUser()" type="button">
+        <div class="update" id="update-btn">UPDATE</div>
       </button>
     </div>
+    <!-- <div class="col-12">
+      <button class="btn btn-field2 mx-auto" onclick="updateUser()" type="button">
+        <div class="get">GET</div>
+      </button>
+    </div> -->
 
   </form>
   <table id="mytable">
@@ -132,12 +137,14 @@ fetch('http://localhost:3000/getall')
                 <td>${e.subjects}</td>
                 <td>${e.message}</td>
                 <td><button onclick="Edit('${e.id}','${e.username}','${e.email}','${e.subjects}','${e.message}')">Edit</button>
-                  <button onclick="Delete()">Delete</button></td>
+                  <button onclick="Delete(${e.id},${e.isActive})">Delete</button></td>
                 </tr>`
             });
       console.log(html)
       document.getElementsByTagName('tbody')[0].innerHTML=html
           })
+
+          var passvalue=''
 ////////////// function for insert the data /////////////
 function createUser(){
   console.log(document.getElementById("username").value,);
@@ -155,16 +162,18 @@ function createUser(){
 })
   .then((response) => response.json())
   .then((json) => console.log(json));
+  location.reload()
 }
 
-//////////////// function for update the data ///////////
+//////////////// function for update the data //////////////
 
 function updateUser(){
   console.log('clicked',document.getElementById("username").value,);
   fetch('http://localhost:3000/update',{
   method: 'PUT',
   body: JSON.stringify({
-    id:document.getElementById("id").value,
+     id:passvalue,
+    // id:document.getElementById("id").value,
     username: document.getElementById("username").value,
     email: document.getElementById("email").value,
     subjects: document.getElementById("subjects").value,
@@ -176,22 +185,43 @@ function updateUser(){
 })
   .then((response) => response.json())
   .then((json) => console.log(json));
+  location.reload()
 }
+
+const addbtn=document.getElementById("add-btn");
+const updatebtn=document.getElementById("update-btn");
 
 //////////////// function for edit the data ///////////////
 function Edit(id,username,email,subjects,message)
-{  document.getElementById('id').value=id,
+{  //document.getElementById('id').value=id,
   document.getElementById('username').value=username,
   document.getElementById('email').value=email,
   document.getElementById('subjects').value=subjects,
-  document.getElementById('message').value=message
+  document.getElementById('message').value=message,
+  passvalue=id
+
+  addbtn.style.display='none';
+  updatebtn.style.display='block';
 }
 
-function Delete()
+function Delete(id,isActive)
 {
-  
+  console.log('clicked',document.getElementById("username").value,);
+  fetch('http://localhost:3000/delete',{
+  method: 'PUT',
+  body: JSON.stringify({
+     id:id,
+     isActive:0,
+    // id:document.getElementById("id").value,
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+  location.reload()
 }
- 
   
   
   </script>

@@ -21,13 +21,18 @@
     border: 2px solid #000;
     background-color: #000;
     color: #fff;
+    display: none;
 
 }
+
 .ADD{
     width: 150px;
     height: 30px;
     /* padding-bottom: 50px;     */
 }
+/* .ADD:hover{
+    /* background-color: skyblue; */
+*/
 .update{
     width: 150px;
     height: 30px;  
