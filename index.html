@@ -74,16 +74,15 @@
       <div class="valid-feedback">Looks good!</div>
     </div>
 
-    <div class="col-6 mt-5">
-      <button class="btn btn-field ms-auto" onclick="createUser()" type="button">
-        <div class="ADD" id="add-btn">ADD</div>
+    <!-- <div class="col-6 mt-5"> -->
+      <button class="ADD mx-auto" id="add-btn" onclick="createUser()" type="button"> ADD
+        <!-- <div class="ADD" id="add-btn">ADD</div> -->
       </button>
-    </div>
-    <div class="col-6 mt-5">
-      <button class="btn btn-field1 ms-auto" onclick="updateUser()" type="button">
-        <div class="update" id="update-btn">UPDATE</div>
+    <!-- <div class="col-6 mt-5"> -->
+      <button class="update mx-auto" id="update-btn" onclick="updateUser()" type="button"> UPDATE
+        <!-- <div class="update" id="update-btn">UPDATE</div> -->
       </button>
-    </div>
+    <!-- </div> -->
     <!-- <div class="col-12">
       <button class="btn btn-field2 mx-auto" onclick="updateUser()" type="button">
         <div class="get">GET</div>
@@ -124,6 +123,7 @@
 })
 
 /////////////// function for getall data //////////////
+// function get(){
 fetch('http://localhost:3000/getall')
       .then(response => response.json())
       .then(json => {
@@ -143,6 +143,7 @@ fetch('http://localhost:3000/getall')
       console.log(html)
       document.getElementsByTagName('tbody')[0].innerHTML=html
           })
+        // }
 
           var passvalue=''
 ////////////// function for insert the data /////////////

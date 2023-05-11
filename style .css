@@ -7,12 +7,14 @@
     display: flex;
     justify-content: center;
 }
-.btn-field{
+/* .btn-field{
     display: flex;
     align-items: end;
     border: 2px solid #000;
     background-color: #000;
     color: #fff;
+    width: 150px;
+    height: 30px;
 
 }
 .btn-field1{
@@ -22,20 +24,23 @@
     background-color: #000;
     color: #fff;
     display: none;
+    width: 150px;
+    height: 30px;
 
-}
+} */
 
 .ADD{
     width: 150px;
-    height: 30px;
+    height: 30px; 
     /* padding-bottom: 50px;     */
-}
+ } 
 /* .ADD:hover{
     /* background-color: skyblue; */
-*/
+
 .update{
     width: 150px;
     height: 30px;  
+    display: none;
     /* padding-bottom: 50px;       */
 }
 #mytable{
