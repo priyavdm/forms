@@ -145,7 +145,7 @@ fetch('http://localhost:3000/getall')
           })
         // }
 
-          var passvalue=''
+          // var passvalue=''
 ////////////// function for insert the data /////////////
 function createUser(){
   console.log(document.getElementById("username").value,);
@@ -168,12 +168,12 @@ function createUser(){
 
 //////////////// function for update the data //////////////
 
-function updateUser(){
+function updateUser(id){
   console.log('clicked',document.getElementById("username").value,);
   fetch('http://localhost:3000/update',{
   method: 'PUT',
   body: JSON.stringify({
-     id:passvalue,
+     id:id,
     // id:document.getElementById("id").value,
     username: document.getElementById("username").value,
     email: document.getElementById("email").value,
@@ -189,20 +189,22 @@ function updateUser(){
   location.reload()
 }
 
-const addbtn=document.getElementById("add-btn");
-const updatebtn=document.getElementById("update-btn");
+
+// const addbtn=document.getElementById("add-btn");
+// const updatebtn=document.getElementById("update-btn");
 
 //////////////// function for edit the data ///////////////
 function Edit(id,username,email,subjects,message)
-{  //document.getElementById('id').value=id,
+ {  
+  // document.getElementById('id').value=id,
   document.getElementById('username').value=username,
   document.getElementById('email').value=email,
   document.getElementById('subjects').value=subjects,
   document.getElementById('message').value=message,
-  passvalue=id
-
-  addbtn.style.display='none';
-  updatebtn.style.display='block';
+  //  passvalue =id
+  document.getElementById("update-btn").setAttribute("onclick","updateUser("+ id +")");
+  document.getElementById("add-btn").style.display='none';
+  document.getElementById("update-btn").style.display='block';
 }
 
 function Delete(id,isActive)

@@ -27,14 +27,17 @@ app.get('/getall',(req,res)=>{
 
 app.post('/insert',(req,res)=>{
         // console.log(req.body,"gfgtt")
-        connection.query(`insert into users (username,email,subjects,message) values ('${req.body.username}','${req.body.email}','${req.body.subjects}','${req.body.message}')`, function (error, results) {
+        // connection.query(`insert into users (username,email,subjects,message) values ('${req.body.username}','${req.body.email}','${req.body.subjects}','${req.body.message}')`, function (error, results) {
+          connection.query('insert into users (username,email,subjects,message) values(?,?,?,?)', [req.body.username,req.body.email,req.body.subjects,req.body.message], function (error, results) {
          if (error) {
         console.log(error);
-    }
-        
-         res.json(results)
-     });
-    });
+         }
+        res.json(results)
+        })
+      })
+      
+    
+    
 
 app.put('/update',(req,res)=>{
     
@@ -70,5 +73,5 @@ app.put('/delete',(req,res)=>{
 //              })
 
 app.listen(3000,()=>{
-   console.log("Listening on port 3000");
- })  
+  console.log("Listening on port 3000");
+})  
