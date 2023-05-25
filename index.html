@@ -151,6 +151,7 @@ function createUser(){
   console.log(document.getElementById("username").value,);
   fetch('http://localhost:3000/insert',{
   method: 'POST',
+  //payload
   body: JSON.stringify({
     username: document.getElementById("username").value,
     email: document.getElementById("email").value,
