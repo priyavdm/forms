@@ -52,7 +52,7 @@ app.put('/update',(req,res)=>{
 
 app.put('/delete',(req,res)=>{
     
-          connection.query('update users set isActive=? where id=?',[req.body.isActive,req.body.id],function (error, results) {
+          connection.query('update users set isActive=? where id=?',[0,req.body.id],function (error, results) {
     if (error) {
                    console.log(error);       
            }        
